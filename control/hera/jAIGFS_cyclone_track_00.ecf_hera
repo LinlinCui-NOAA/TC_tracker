@@ -1,0 +1,69 @@
+#!/bin/ksh --login
+  
+#SBATCH --job-name=aigfs_tc_track
+#SBATCH --account=fv3-cpu
+#SBATCH --qos=batch
+#SBATCH --ntasks=1
+
+##SBATCH --nodes=66
+##SBATCH --tasks-per-node=20
+##SBATCH --cpus-per-task=2
+
+#SBATCH --time=00:40:00
+#SBATCH --mem=90g
+#SBATCH -o aigfs_tc_track.log
+
+#%include <head.h> 
+#%include <envir-p2.h>
+
+#export target=hera
+export clustername=hera
+module use ../../modulefiles
+module load ${clustername}.lua
+module list
+
+set -x
+export envir=dev
+export cyc=00
+export job=aigfs_track_${cyc}
+
+#export PACKAGEROOT=/scratch1/NCEPDEV/nems/Jun.Wang/tracker/TC_tracker
+#export DATAROOT=/scratch2/NCEPDEV/ensemble/Jiayi.Peng/JunWang/ptmp
+export PACKAGEROOT=/scratch2/NCEPDEV/ensemble/Jiayi.Peng/JunWang/TC_tracker
+export DATAROOT=/scratch1/NCEPDEV/stmp2/Jun.Wang/tracker
+export COMROOT=${DATAROOT}/com
+export KEEPDATA=YES
+
+# versions file for tracker $tracker.ver
+VERSION_FILE=${PACKAGEROOT}/versions/tracker.ver
+if [ -f $VERSION_FILE ]; then
+  . $VERSION_FILE
+else
+  ecflow_client --abort
+  exit
+fi
+
+# CALL executable job script here
+#${PACKAGEROOT}/TC_tracker.${TC_tracker_ver}/jobs/JFV3_CYCLONE_TRACK_JP
+${PACKAGEROOT}/jobs/JAIGFS_CYCLONE_TRACK
+
+#if [ $? -ne 0 ]; then
+#  ecflow_client --abort
+#  exit
+#fi
+
+#%include <tail.h> 
+#%manual
+######################################################################
+#PURPOSE:  Executes the job that creates GFS TC track forecasts
+######################################################################
+
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+
+# include manual page below
+#%end
+
