@@ -54,7 +54,7 @@ export SCRIPTens_tracker=${SCRIPTens_tracker:-$HOMEens_tracker/scripts}
 ##############################
 #setpdy.sh
 #. PDY
-export PDY=20240701
+export PDY=20250626
 
 ##############################################
 # Define COM directories
@@ -62,12 +62,12 @@ export PDY=20240701
 #mac=`echo ${SITE}`
 #mac2=$(hostname | cut -c1-2)
 
-if [[ -d /scratch2 ]] ; then
-  # We are on NOAA Hera
+if [[ -d /scratch3 ]] ; then
+  # We are on NOAA Ursa
 #  export COMINsyn=${COMINsyn:-/scratch2/NCEPDEV/ovp/Hana.Jafary/Input/TCvital}
 #  export COMINgfs=${COMINgfs:-/scratch2/NCEPDEV/ovp/Hana.Jafary/Input/gfs.${PDY}}
-  export COMINsyn=/scratch2/NCEPDEV/ensemble/Jiayi.Peng/JunWang/input/syndat
-  export COMINgfs=/scratch2/NCEPDEV/ensemble/Jiayi.Peng/JunWang/input/graphcastgfs.${PDY}
+  export COMINsyn=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat
+  export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
 
 elif [[ -d /work2 ]] ; then
   # We are on MSU Orion
