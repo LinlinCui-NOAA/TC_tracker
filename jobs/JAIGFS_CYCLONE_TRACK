@@ -48,6 +48,7 @@ export EXECens_tracker=${EXECens_tracker:-$HOMEens_tracker/exec}
 export FIXens_tracker=${FIXens_tracker:-$HOMEens_tracker/fix}
 export USHens_tracker=${USHens_tracker:-$HOMEens_tracker/ush}
 export SCRIPTens_tracker=${SCRIPTens_tracker:-$HOMEens_tracker/scripts}
+echo "home=HOMEens_tracker"
 
 ##############################
 # Run setpdy and initialize PDY variables
@@ -62,12 +63,16 @@ export PDY=20250626
 #mac=`echo ${SITE}`
 #mac2=$(hostname | cut -c1-2)
 
+pwdir=`pwd`
+ursadir=`-d /scratch3`
+echo "pwd=$pwdir, ursadir=$ursadir"
+
 if [[ -d /scratch3 ]] ; then
   # We are on NOAA Ursa
 #  export COMINsyn=${COMINsyn:-/scratch2/NCEPDEV/ovp/Hana.Jafary/Input/TCvital}
 #  export COMINgfs=${COMINgfs:-/scratch2/NCEPDEV/ovp/Hana.Jafary/Input/gfs.${PDY}}
-  export COMINsyn=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat
-  export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
+  export COMINsyn=${COMINsyn:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat}
+  export COMINgfs=${COMINgfs:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}}
 
 elif [[ -d /work2 ]] ; then
   # We are on MSU Orion

@@ -12,7 +12,7 @@ export COMPONENT=${COMPONENT:-atmos}
 #export gfsdir=${COMINgfs}/${cyc}/${COMPONENT}
 export gfsdir=${COMINgfs}/${cyc}
 
-export pert="p01"
+export pert=${COMPONENT:-"p01"}
 pertdir=${DATA}/${cmodel}/${pert}
 mkdir -p $pertdir
 
@@ -25,9 +25,9 @@ mkdir -p $pertdir
 
 outfile=${pertdir}/trkr.${cmodel}.${pert}.${ymdh}.out
 
-if [[ -d /scratch2 ]] ; then
-  # We are on NOAA Hera
-  machine=hera
+if [[ -d /scratch3 ]] ; then
+  # We are on NOAA Ursa
+  machine=ursa
   ${USHens_tracker}/extrkr_aigfs.sh ${loopnum} ${cmodel} ${ymdh} ${pert} ${pertdir} #2>&1 >${outfile}
 
 elif [[ -d /work ]] ; then
@@ -58,11 +58,14 @@ else
 fi
 export err=$?; err_chk
 
-#if [ "$SENDCOM" = 'YES' ]; then
-#  cat ${pertdir}/trak.gfso.atcfunix.${PDY}${cyc} | \
-#      sed s:GFSO:AVNO:g \
-#    > ${COMOUT}/avn.t${cyc}z.cyclone.trackatcfunix
-#fi
+if [ "$SENDCOM" = 'YES' ]; then
+  cat ${pertdir}/trak.avno.atcfunix.${PDY}${cyc} | \
+      sed s:AVNO:${modelname}:g \
+    > ${COMOUT}/${modelname}.t${cyc}z.cyclone.trackatcfunix
+  cat ${pertdir}/long.avno.atcfunix.${PDY}${cyc} | \
+      sed s:AVNO:${modelname}:g \
+    > ${COMOUT}/${modelname}p.t${cyc}z.cyclone.trackatcfunix
+fi
 
 #############################################################
 

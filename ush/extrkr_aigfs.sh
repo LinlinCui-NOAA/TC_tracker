@@ -267,10 +267,14 @@ case ${cmodel} in
        pert=` echo ${pert} | tr '[A-Z]' '[a-z]'`           ;
        PERT=` echo ${pert} | tr '[a-z]' '[A-Z]'`           ;
        
+#       ensdira=${ensdira:-${COMINgefs:?}/pgrb2ap5}             ;
        ensdira=${ensdira:-${COMINgefs:?}/pgrb2ap5}             ;
-       ensgfilea=ge${pert}.t${cyc}z.pgrb2a.0p50.f          ;
+#       ensgfilea=ge${pert}.t${cyc}z.pgrb2a.0p50.f          ;
+       ensgfilea=pmlgefs${pert}.t${cyc}z.pgrb2.0p25.f          ;
+#       ensdirb=${ensdirb:-${COMINgefs:?}/pgrb2bp5}             ;
        ensdirb=${ensdirb:-${COMINgefs:?}/pgrb2bp5}             ;
-       ensgfileb=ge${pert}.t${cyc}z.pgrb2b.0p50.f          ;
+#       ensgfileb=pmlgefse${pert}.t${cyc}z.pgrb2b.0p50.f          ;
+       ensgfileb=pmlgefs${pert}.t${cyc}z.pgrb2.0p25.f          ;
 
        vit_incr=${FHOUT_CYCLONE:-6}                        ;
        fcstlen=${FHMAX_CYCLONE:-240}                       ;
