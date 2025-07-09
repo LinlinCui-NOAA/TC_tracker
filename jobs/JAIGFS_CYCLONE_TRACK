@@ -63,10 +63,6 @@ export PDY=20250626
 #mac=`echo ${SITE}`
 #mac2=$(hostname | cut -c1-2)
 
-pwdir=`pwd`
-ursadir=`-d /scratch3`
-echo "pwd=$pwdir, ursadir=$ursadir"
-
 if [[ -d /scratch3 ]] ; then
   # We are on NOAA Ursa
 #  export COMINsyn=${COMINsyn:-/scratch2/NCEPDEV/ovp/Hana.Jafary/Input/TCvital}

@@ -96,6 +96,7 @@ else
   echo " are defined: "
   echo "   PDY ................................... $PDY"
   echo "   cyc ................................... $cyc"
+  echo "   ensmember ............................. $ensmember"
   echo "   cmodel ................................ $cmodel"
   echo "   jobid ................................. $jobid"
   echo "   envir ................................. $envir"
@@ -207,9 +208,9 @@ case ${cmodel} in
        echo " ++ operational AI-GFS chosen"               ;
        echo " "; set -x                                    ;
 #       gfsdir=${gfsdir:-${COMINgfs:?}/${cyc}}                     ;
-       gfsdir=${gfsdir:-${COMINgfs:?}/${cyc}/${COMPONENT}} ;
+       gfsdir=${gfsdir:-${COMINgfs:?}/${cyc}/${ensmember}} ;
 #      gfsgfile=gfs.t${cyc}z.pgrb2.0p25.f                  ;       
-       gfsgfile=graphcastgfs.t${cyc}z.pgrb2.0p25.f       ;
+       gfsgfile=${fileprefix}.t${cyc}z.pgrb2.0p25.f       ;
 
        vit_incr=${FHOUT_CYCLONE:-6}                        ;
        fcstlen=${FHMAX_CYCLONE:-192}                       ;
@@ -2659,9 +2660,9 @@ then
   if [ ${cmodel} = 'gfdl' ]
   then
     cp ${TRKDATA}/trak.${atcfout}.atcfunix.${PDY}${cyc} ${COMOUT}/${stormenv}.${PDY}${cyc}.trackeratcfunix
-  else
-    cp ${TRKDATA}/trak.${atcfout}.atcfunix.${PDY}${cyc} ${COMOUT}/${atcfout}.t${cyc}z.cyclone.trackatcfunix
-    cp ${TRKDATA}/long.${atcfout}.atcfunix.${PDY}${shh} ${COMOUT}/${atcfout}p.t${cyc}z.cyclone.trackatcfunix
+#  else
+#    cp ${TRKDATA}/trak.${atcfout}.atcfunix.${PDY}${cyc} ${COMOUT}/${atcfout}.t${cyc}z.cyclone.trackatcfunix
+#    cp ${TRKDATA}/long.${atcfout}.atcfunix.${PDY}${shh} ${COMOUT}/${atcfout}p.t${cyc}z.cyclone.trackatcfunix
 #    cat ${TRKDATA}/long.${atcfout}.atcfunix.${PDY}${shh} | \
 #      sed s:GFSO:GFSP:g \
 #    > ${COMOUT}/gfsp.t${cyc}z.cyclone.trackatcfunix
@@ -2742,7 +2743,7 @@ then
 
       set +x
       echo " "
-      echo "+++ Adding records to  TPC ATCFUNIX directory: $COMOUTatcf/${at}${NO}${syyyy}/ncep_${at}${NO}${syyyy}"
+      echo "+++ Adding records to  TPC ATCFUNIX directory: $COMOUTatcf/${at}${NO}${syyyy}/ncep_a${at}${NO}${syyyy}"
       echo " "
       set -x
     done
