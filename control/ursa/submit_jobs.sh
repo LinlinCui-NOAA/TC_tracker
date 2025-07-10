@@ -27,7 +27,7 @@ export CYC=00
 export PERT="p01"
 
 #run directories
-export PACKAGEROOT=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/TC_tracker
+export PACKAGEROOT=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/test/TC_tracker
 export DATAROOT=/scratch3/NCEPDEV/stmp/Jun.Wang/ptmp
 export COMROOT=${DATAROOT}/com
 export COMINSYN=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat
