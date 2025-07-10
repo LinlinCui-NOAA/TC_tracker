@@ -1,0 +1,74 @@
+#!/bin/ksh --login
+  
+#SBATCH --job-name=aigfs_tc_tracker
+#SBATCH --account=fv3-cpu
+#SBATCH --qos=debug
+#SBATCH --ntasks=1
+
+##SBATCH --nodes=17
+##SBATCH --tasks-per-node=80
+##SBATCH --cpus-per-task=2
+
+#SBATCH --time=00:30:00
+#SBATCH --mem=90g
+#SBATCH -o aigfs_tc_tracker.log
+
+#%include <head.h> 
+#%include <envir-p2.h>
+
+export clustername=ursa
+module use ../../modulefiles
+module load ${clustername}.lua
+module list
+
+set -x
+export envir=dev
+
+export PACKAGEROOT=@[PACKAGEROOT]
+export DATAROOT=@[DATAROOT]
+export COMROOT=$[COMROOT]
+export KEEPDATA=YES
+
+# experiment configurations:
+export PDY=@[PDY]
+export cyc=@[CYC]
+export pert=@[PERT]
+export COMINgfs=@[COMINGFS]
+export ensmember=@[ENSMEMBER]
+export modelname=@[MODELNAME]
+export COMINsyn=@[COMINSYN]
+#
+if [ "$pert" = "" ]; then
+   export fileprefix=graphcastgfs
+else
+   export fileprefix=pmlgefs${pert}
+fi
+export job=aigfs_track_${cyc}
+
+# CALL executable job script here
+${PACKAGEROOT}/jobs/JAIGFS_CYCLONE_TRACK
+
+if [ $? -ne 0 ]; then
+  echo "tracker run FAILED"
+  exit
+else
+  echo "tracker run FINISHED"
+fi
+
+echo "$PDY $cyc : jAIGFS_cyclone_track_00.ecf finished"
+
+#%include <tail.h> 
+#%manual
+######################################################################
+#PURPOSE:  Executes the job that creates GFS TC track forecasts
+######################################################################
+
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+
+# include manual page below
+#%end
+
