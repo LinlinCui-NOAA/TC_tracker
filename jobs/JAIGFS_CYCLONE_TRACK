@@ -55,7 +55,7 @@ echo "home=HOMEens_tracker"
 ##############################
 #setpdy.sh
 #. PDY
-export PDY=20250626
+export PDY=${PDY:-20250626}
 
 ##############################################
 # Define COM directories
