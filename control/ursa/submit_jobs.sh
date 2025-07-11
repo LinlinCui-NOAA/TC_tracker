@@ -21,20 +21,20 @@ export PDY=${1:-20250709}
 export CYC=${2:-00}
 #member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:c00, p01, ... , p30, weight: 0, 1, 2, ..., 30
 export PERT=${3:-"p01"}
+#model version: "", or "_test"
+export modelversion=${4:-""}
 #run directories
-export PACKAGEROOT=${4:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/test/TC_tracker}
-export DATAROOT=${5:-/scratch3/NCEPDEV/stmp/Jun.Wang/ptmp}
-export COMINSYN=${6:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat}
+export PACKAGEROOT=${5:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/test/TC_tracker}
+export DATAROOT=${6:-/scratch3/NCEPDEV/stmp/Jun.Wang/ptmp}
+export COMINSYN=${7:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat}
 
 export COMROOT=${DATAROOT}/com
 if [ "$PERT" = "" ]; then
    export COMINGFS=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
    export ENSMEMBER=""
    export MODELNAME="ggfs"
-#model version: "", or "_test"
-   export modelversion=""
    export outputs3dir=graphcastgfs.${PDY}/${CYC}/forecasts_13_levels${modelversion}
-   export JBNME=jAIGFS_cyclone_track${modelversion}
+   export JBNME=aigfs_tc_track${modelversion}
 else
    export COMINGFS=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/pmlgefs.${PDY}
    pertmember=`echo $PERT | cut -c2-3`
@@ -42,7 +42,7 @@ else
    export ENSMEMBER=forecasts_13_levels_${PERT}_model_${weight}
    export MODELNAME="g"${PERT}
    export outputs3dir=EAGLE_ensemble/pmlgefs.${PDY}/${CYC}/${ENSMEMBER}
-   export JBNME=jAIGFS_cyclone_track_${PERT}
+   export JBNME=aigfs_tc_track_${PERT}
 fi
 # sync data
 export clustername=ursa
