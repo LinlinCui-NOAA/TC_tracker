@@ -1,6 +1,6 @@
 #!/bin/ksh --login
   
-#SBATCH --job-name=aigfs_tc_tracker
+#SBATCH --job-name=@[JBNME]
 #SBATCH --account=fv3-cpu
 #SBATCH --qos=debug
 #SBATCH --ntasks=1
@@ -11,7 +11,7 @@
 
 #SBATCH --time=00:30:00
 #SBATCH --mem=90g
-#SBATCH -o aigfs_tc_tracker.log
+#SBATCH -o @[JBNME].log
 
 #%include <head.h> 
 #%include <envir-p2.h>

@@ -17,22 +17,18 @@ source ./atparse.bash
 source ./submitjobwait.bash
 
 # experiment configurations:
-export PDY=20250709
-#export PDY=20250626
-export CYC=00
+export PDY=${1:-20250709}
+export CYC=${2:-00}
 #member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:c00, p01, ... , p30, weight: 0, 1, 2, ..., 30
-# EAGLE SOLO:
-#export pert=""
-# EAGLE ensemble
-export PERT="p01"
-
+export PERT=${3:-"p01"}
 #run directories
-export PACKAGEROOT=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/test/TC_tracker
-export DATAROOT=/scratch3/NCEPDEV/stmp/Jun.Wang/ptmp
+export PACKAGEROOT=${4:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/test/TC_tracker}
+export DATAROOT=${5:-/scratch3/NCEPDEV/stmp/Jun.Wang/ptmp}
+export COMINSYN=${6:-/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat}
+
 export COMROOT=${DATAROOT}/com
-export COMINSYN=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat
 if [ "$PERT" = "" ]; then
-   export COMINGFS=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat
+   export COMINGFS=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
    export ENSMEMBER=""
    export MODELNAME="ggfs"
 #model version: "", or "_test"
