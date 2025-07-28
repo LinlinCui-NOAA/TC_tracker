@@ -33,25 +33,24 @@ export KEEPDATA=YES
 export PDY=20250626
 export cyc=00
 export job=aigfs_track_${cyc}
-#member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:c00, p01, ... , p30, weight: 0, 1, 2, ..., 30
+#member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:C00, P01, ... , P30, weight: 0, 1, 2, ..., 30
 # EAGLE SOLO:
 #export pert=""
 # EAGLE ensemble
-export pert="c00"
-#export pert="p01"
-#modelname has to be 4 letters, EAGLE_SOLO:ggfs, EAGLE_ENSEMBLE:gc00, gp01, ..., gp30
+export pert="C00"
+#modelname has to be 4 letters, EAGLE_SOLO:MGFS, EAGLE_ENSEMBLE:MC00, MP01, ..., MP30
 if [ "$pert" = "" ]; then
    export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
    export ensemble=""
    export fileprefix=graphcastgfs
-   export modelname="ggfs"
+   export modelname="MGFS"
 else
    export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/pmlgefs.${PDY}
    pertmember=`echo $pert | cut -c2-3`
    weight=$(expr $pertmember + 0)
    export ensmember=forecasts_13_levels_${pert}_model_${weight}
    export fileprefix=pmlgefs${pert}
-   export modelname="g"${pert}
+   export modelname="M"${pert}
 fi
 #model history files
 export COMINsyn=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/syndat

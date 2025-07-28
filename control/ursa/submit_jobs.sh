@@ -19,8 +19,8 @@ source ./submitjobwait.bash
 # experiment configurations:
 export PDY=${1:-20250709}
 export CYC=${2:-00}
-#member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:c00, p01, ... , p30, weight: 0, 1, 2, ..., 30
-export PERT=${3:-"p01"}
+#member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:C00, P01, ... , P30, weight: 0, 1, 2, ..., 30
+export PERT=${3:-"P01"}
 #model version: "", or "_test"
 export modelversion=${4:-""}
 #run directories
@@ -32,7 +32,7 @@ export COMROOT=${DATAROOT}/com
 if [ "$PERT" = "" ]; then
    export COMINGFS=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
    export ENSMEMBER=""
-   export MODELNAME="ggfs"
+   export MODELNAME="MGFS"
    export outputs3dir=graphcastgfs.${PDY}/${CYC}/forecasts_13_levels${modelversion}
    export JBNME=aigfs_tc_track${modelversion}
 else
@@ -40,7 +40,7 @@ else
    pertmember=`echo $PERT | cut -c2-3`
    weight=$(expr $pertmember + 0)
    export ENSMEMBER=forecasts_13_levels_${PERT}_model_${weight}
-   export MODELNAME="g"${PERT}
+   export MODELNAME="M"${PERT}
    export outputs3dir=EAGLE_ensemble/pmlgefs.${PDY}/${CYC}/${ENSMEMBER}
    export JBNME=aigfs_tc_track_${PERT}
 fi
