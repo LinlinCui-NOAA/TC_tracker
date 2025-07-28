@@ -36,14 +36,19 @@ export job=aigfs_track_${cyc}
 #member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:c00, p01, ... , p30, weight: 0, 1, 2, ..., 30
 # EAGLE SOLO:
 #export pert=""
+#export modelversion=""
 # EAGLE ensemble
 export pert="c00"
-#modelname has to be 4 letters, EAGLE_SOLO:MGFS, EAGLE_ENSEMBLE:MC00, MP01, ..., MP30
+#modelname has to be 4 letters, EAGLE_SOLO:MGFS/MGFT, EAGLE_ENSEMBLE:MC00, MP01, ..., MP30
 if [ "$pert" = "" ]; then
    export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
    export ensemble=""
    export fileprefix=graphcastgfs
-   export modelname="MGFS"
+   if [ "${modelversion}" = "" ]; then
+       export MODELNAME="MGFS"
+   elif [ "${modelversion}" = "_test" ]; then
+       export MODELNAME="MGFT"
+   fi
 else
    export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/pmlgefs.${PDY}
    pertmember=`echo $pert | cut -c2-3`

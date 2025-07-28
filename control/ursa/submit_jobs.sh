@@ -32,7 +32,11 @@ export COMROOT=${DATAROOT}/com
 if [ "$PERT" = "" ]; then
    export COMINGFS=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
    export ENSMEMBER=""
-   export MODELNAME="MGFS"
+   if [ "${modelversion}" = "" ]; then
+       export MODELNAME="MGFS"
+   elif [ "${modelversion}" = "_test" ]; then
+       export MODELNAME="MGFT"
+   fi
    export outputs3dir=graphcastgfs.${PDY}/${CYC}/forecasts_13_levels${modelversion}
    export FILEPREFIX=graphcastgfs
    export JBNME=aigfs_tc_track${modelversion}
