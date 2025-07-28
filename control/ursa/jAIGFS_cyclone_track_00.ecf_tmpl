@@ -37,15 +37,12 @@ export COMINgfs=@[COMINGFS]
 export ensmember=@[ENSMEMBER]
 export modelname=@[MODELNAME]
 export COMINsyn=@[COMINSYN]
+export fileprefix=@[FILEPREFIX]
 #
-if [ "$pert" = "" ]; then
-   export fileprefix=graphcastgfs
-else
-   export fileprefix=pmlgefs${pert}
-fi
 export job=aigfs_track_${cyc}
 
 # CALL executable job script here
+
 ${PACKAGEROOT}/jobs/JAIGFS_CYCLONE_TRACK
 
 if [ $? -ne 0 ]; then
