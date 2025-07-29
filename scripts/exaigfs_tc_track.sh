@@ -56,12 +56,13 @@ export err=$?; err_chk
 
 if [ "$SENDCOM" = 'YES' ]; then
   if [ "$cmodel" = "gfs" ]; then
+     filename = $(echo "$modelname" | tr '[:upper:]' '[:lower:]')
      cat ${pertdir}/trak.avno.atcfunix.${PDY}${cyc} | \
         sed s:AVNO:${modelname}:g \
-       > ${COMOUT}/${modelname}.t${cyc}z.cyclone.trackatcfunix
+       > ${COMOUT}/${filelname}.t${cyc}z.cyclone.trackatcfunix
      cat ${pertdir}/long.avno.atcfunix.${PDY}${cyc} | \
         sed s:AVNO:${modelname}:g \
-       > ${COMOUT}/${modelname}p.t${cyc}z.cyclone.trackatcfunix
+       > ${COMOUT}/${filelname}p.t${cyc}z.cyclone.trackatcfunix
    fi
 fi
 
