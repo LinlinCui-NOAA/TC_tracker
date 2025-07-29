@@ -56,7 +56,7 @@ export err=$?; err_chk
 
 if [ "$SENDCOM" = 'YES' ]; then
   if [ "$cmodel" = "gfs" ]; then
-     filename = $(echo "$modelname" | tr '[:upper:]' '[:lower:]')
+     filename=$(echo "$modelname" | tr '[:upper:]' '[:lower:]')
      cat ${pertdir}/trak.avno.atcfunix.${PDY}${cyc} | \
         sed s:AVNO:${modelname}:g \
        > ${COMOUT}/${filename}.t${cyc}z.cyclone.trackatcfunix
