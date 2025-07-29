@@ -27,7 +27,7 @@ export envir=dev
 export PACKAGEROOT=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/20250612/TC_tracker
 export DATAROOT=/scratch3/NCEPDEV/stmp/Jun.Wang/ptmp
 export COMROOT=${DATAROOT}/com
-export KEEPDATA=YES
+export KEEPDATA=NO
 
 # experiment configurations:
 export PDY=20250626

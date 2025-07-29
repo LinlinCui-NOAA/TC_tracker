@@ -27,7 +27,7 @@ export envir=dev
 export PACKAGEROOT=@[PACKAGEROOT]
 export DATAROOT=@[DATAROOT]
 export COMROOT=@[COMROOT]
-export KEEPDATA=YES
+export KEEPDATA=NO
 
 # experiment configurations:
 export PDY=@[PDY]
