@@ -59,10 +59,10 @@ if [ "$SENDCOM" = 'YES' ]; then
      filename = $(echo "$modelname" | tr '[:upper:]' '[:lower:]')
      cat ${pertdir}/trak.avno.atcfunix.${PDY}${cyc} | \
         sed s:AVNO:${modelname}:g \
-       > ${COMOUT}/${filelname}.t${cyc}z.cyclone.trackatcfunix
+       > ${COMOUT}/${filename}.t${cyc}z.cyclone.trackatcfunix
      cat ${pertdir}/long.avno.atcfunix.${PDY}${cyc} | \
         sed s:AVNO:${modelname}:g \
-       > ${COMOUT}/${filelname}p.t${cyc}z.cyclone.trackatcfunix
+       > ${COMOUT}/${filename}p.t${cyc}z.cyclone.trackatcfunix
    fi
 fi
 
