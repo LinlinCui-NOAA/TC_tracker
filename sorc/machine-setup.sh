@@ -49,6 +49,9 @@ elif [[ -d /work2/noaa ]]; then
     target=orion
   fi
     module purge
+elif [[ -d /contrib ]]; then
+  # We are on noaacloud.
+  target=noaacloud
 elif [[ -d /gpfs/f5 ]]; then
   # We are on GAEAC5.
   target=gaeac5

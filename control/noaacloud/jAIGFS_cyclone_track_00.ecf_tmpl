@@ -1,0 +1,71 @@
+#!/bin/ksh --login
+  
+#SBATCH --job-name=@[JBNME]
+#SBATCH --qos=debug
+#SBATCH --ntasks=1
+
+##SBATCH --nodes=1-1
+##SBATCH --tasks-per-node=1
+##SBATCH --cpus-per-task=1
+
+#SBATCH --time=00:30:00
+###SBATCH --mem=10g
+#SBATCH -o @[JBNME].log
+
+#%include <head.h> 
+#%include <envir-p2.h>
+
+./mount-epic-contrib.sh
+export clustername=noaacloud
+module use /contrib/Linlin.Cui/git/LinlinCui-NOAA/TC_tracker/modulefiles
+module load ${clustername}.lua
+module list
+
+set -x
+export envir=dev
+
+export PACKAGEROOT=@[PACKAGEROOT]
+export DATAROOT=@[DATAROOT]
+export COMROOT=@[COMROOT]
+export KEEPDATA=NO
+
+# experiment configurations:
+export PDY=@[PDY]
+export cyc=@[CYC]
+export pert=@[PERT]
+export COMINgfs=@[COMINGFS]
+export ensmember=@[ENSMEMBER]
+export modelname=@[MODELNAME]
+export COMINsyn=@[COMINSYN]
+export fileprefix=@[FILEPREFIX]
+#
+export job=aigfs_track_${cyc}
+
+# CALL executable job script here
+
+${PACKAGEROOT}/jobs/JAIGFS_CYCLONE_TRACK
+
+if [ $? -ne 0 ]; then
+  echo "tracker run FAILED"
+  exit
+else
+  echo "tracker run FINISHED"
+fi
+
+echo "$PDY $cyc : jAIGFS_cyclone_track_00.ecf finished"
+
+#%include <tail.h> 
+#%manual
+######################################################################
+#PURPOSE:  Executes the job that creates GFS TC track forecasts
+######################################################################
+
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+
+# include manual page below
+#%end
+

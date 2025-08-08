@@ -1,0 +1,97 @@
+#!/bin/ksh --login
+#SBATCH --job-name=aigfs_tc_tracker
+#SBATCH --ntasks=1
+
+###SBATCH --nodes=17
+###SBATCH --tasks-per-node=80
+###SBATCH --cpus-per-task=2
+#
+#SBATCH --time=00:30:00
+##SBATCH --mem=90g
+#SBATCH -o aigfs_tc_tracker.log
+#
+
+#%include <head.h> 
+#%include <envir-p2.h>
+./mount-epic-contrib.sh
+
+export clustername=noaacloud
+module use /lustre2/Linlin.Cui/git/LinlinCui-NOAA/TC_tracker/modulefiles
+module load ${clustername}.lua
+module list
+
+set -x
+export envir=dev
+
+export PACKAGEROOT=/lustre2/Linlin.Cui/git/LinlinCui-NOAA/TC_tracker
+export DATAROOT=/lustre2/Linlin.Cui/MLGEFSv1.0/ptmp
+export COMROOT=${DATAROOT}/com
+export KEEPDATA=NO
+
+# experiment configurations:
+#export PDY=20250804
+#export cyc=06
+export job=aigfs_track_${cyc}
+#member: EAGLE_SOLO:"", EAGLE_ENSEMBLE:c00, p01, ... , p30, weight: 0, 1, 2, ..., 30
+# EAGLE SOLO:
+#export pert=""
+#export modelversion=""
+# EAGLE ensemble
+export pert=${gefs_member}
+#modelname has to be 4 letters, EAGLE_SOLO:MGFS/MGFT, EAGLE_ENSEMBLE:MC00, MP01, ..., MP30
+if [ "$pert" = "" ]; then
+   export COMINgfs=/scratch3/NCEPDEV/nems/Jun.Wang/tracker/input/graphcastgfs.${PDY}
+   export ensemble=""
+   export fileprefix=graphcastgfs
+   if [ "${modelversion}" = "" ]; then
+       export MODELNAME="MGFS"
+   elif [ "${modelversion}" = "_test" ]; then
+       export MODELNAME="MGFT"
+   fi
+else
+   export COMINgfs=/lustre2/Linlin.Cui/MLGEFSv1.0/${PDY}${cyc}
+   pertmember=`echo $pert | cut -c2-3`
+   weight=$(expr $pertmember + 0)
+   export ensmember=forecasts_13_levels_${pert}_model_${weight}
+   export fileprefix=pmlgefs${pert}
+   export modelname="M"$(echo "$pert" | tr '[:lower:]' '[:upper:]')
+fi
+#model history files
+export COMINsyn=/lustre2/Linlin.Cui/MLGEFSv1.0/oper/tracker/syndat
+
+# CALL executable job script here
+${PACKAGEROOT}/jobs/JAIGFS_CYCLONE_TRACK
+
+if [ $? -ne 0 ]; then
+  echo "tracker run FAILED"
+  exit
+else
+  echo "tracker run FINISHED"
+fi
+
+#%include <tail.h> 
+#%manual
+######################################################################
+#PURPOSE:  Executes the job that creates GFS TC track forecasts
+######################################################################
+
+######################################################################
+# Job specific troubleshooting instructions:
+#  see generic troubleshoot manual page
+#
+######################################################################
+
+# include manual page below
+#%end
+
+##upload tc tracker file
+#modelname="m"${gefs_member}
+##modelname=$(echo "$modelname" | tr '[:lower:]' '[:upper:]')
+#tctracker=$COMROOT/aigfs.$PDY/$cyc/products/atmos/cyclone/tracks/${modelname}p.t${cyc}z.cyclone.trackatcfunix
+#
+#if [ -s "$tctracker" ]; then
+#    echo "Uploading the tracker file to s3 bucket:"
+#    aws s3 --profile gcgfs cp $COMROOT/aigfs.$PDY/$cyc/products/atmos/cyclone/tracks/${modelname}p.t${cyc}z.cyclone.trackatcfunix s3://noaa-nws-graphcastgfs-pds/EAGLE_ensemble/pmlgefs."$PDY/"$cyc"/forecasts_13_levels_${gefs_member}_model_${model_id}/${modelname}p.t${cyc}z.cyclone.trackatcfunix
+#else
+#    echo "tracker file for ${PDY}${cyc}is empty!"
+#fi
